@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Cloud5mins.ShortenerTools.Core.Domain
+namespace LettrLabs.UrlShorterner.Core.Domain
 {
     public class ClickDateList
     {

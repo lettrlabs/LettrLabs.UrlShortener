@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Cloud5mins.ShortenerTools.Core.Domain;
+using LettrLabs.UrlShorterner.Core.Domain;
 
-namespace Cloud5mins.ShortenerTools.Core.Messages
+namespace LettrLabs.UrlShorterner.Core.Messages
 {
     public class ListResponse
     {

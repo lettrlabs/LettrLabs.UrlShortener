@@ -1,4 +1,4 @@
-namespace Cloud5mins.ShortenerTools.Core.Messages
+namespace LettrLabs.UrlShorterner.Core.Messages
 {
     public class UrlClickStatsRequest
     {

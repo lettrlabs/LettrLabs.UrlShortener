@@ -20,8 +20,8 @@ Output:
     }
 */
 
-using Cloud5mins.ShortenerTools.Core.Domain;
-using Cloud5mins.ShortenerTools.Core.Messages;
+using LettrLabs.UrlShorterner.Core.Domain;
+using LettrLabs.UrlShorterner.Core.Messages;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
@@ -32,7 +32,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Cloud5mins.ShortenerTools.Functions
+namespace LettrLabs.UrlShorterner.Functions
 {
 
     public class UrlCreate
@@ -83,7 +83,7 @@ namespace Cloud5mins.ShortenerTools.Functions
                     return badResponse;
                 }
 
-                // Validates if input.url is a valid aboslute url, aka is a complete refrence to the resource, ex: http(s)://google.com
+                // Validates if input.url is a valid absolute url, aka is a complete reference to the resource, ex: http(s)://google.com
                 if (!Uri.IsWellFormedUriString(input.Url, UriKind.Absolute))
                 {
                     var badResponse = req.CreateResponse(HttpStatusCode.BadRequest);

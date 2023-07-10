@@ -3,11 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cloud5mins.ShortenerTools.Functions", "Cloud5mins.ShortenerTools.Functions\Cloud5mins.ShortenerTools.Functions.csproj", "{6388276F-17B7-4AB0-9A6B-C0E2F4A3D283}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LettrLabs.UrlShorterner.Functions", "Cloud5mins.ShortenerTools.Functions\LettrLabs.UrlShorterner.Functions.csproj", "{6388276F-17B7-4AB0-9A6B-C0E2F4A3D283}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cloud5mins.ShortenerTools.Core", "Cloud5mins.ShortenerTools.Core\Cloud5mins.ShortenerTools.Core.csproj", "{7449639F-62CD-4B2C-AB98-58C85904FDC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LettrLabs.UrlShorterner.Core", "Cloud5mins.ShortenerTools.Core\LettrLabs.UrlShorterner.Core.csproj", "{7449639F-62CD-4B2C-AB98-58C85904FDC4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cloud5mins.ShortenerTools.TinyBlazorAdmin", "Cloud5mins.ShortenerTools.TinyBlazorAdmin\Cloud5mins.ShortenerTools.TinyBlazorAdmin.csproj", "{B5FB0C0A-05BA-491B-9379-CE4BDF025B3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LettrLabs.UrlShorterner.TinyBlazorAdmin", "Cloud5mins.ShortenerTools.TinyBlazorAdmin\LettrLabs.UrlShorterner.TinyBlazorAdmin.csproj", "{B5FB0C0A-05BA-491B-9379-CE4BDF025B3B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{362C2DD0-9568-4C53-B30F-9195C80FDF28}"
+	ProjectSection(SolutionItems) = preProject
+		deployment\azureDeploy.json = deployment\azureDeploy.json
+		deployment\azureDeploy.params.dev.json = deployment\azureDeploy.params.dev.json
+		deployment\azureDeploy.params.json = deployment\azureDeploy.params.json
+		deployment\debug.azcli = deployment\debug.azcli
+		deployment\debugARM.json = deployment\debugARM.json
+		..\README.md = ..\README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

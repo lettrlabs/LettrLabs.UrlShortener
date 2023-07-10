@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "Cloud5mins.ShortenerTools.TinyBlazorAdmin": {
+    "LettrLabs.UrlShorterner.TinyBlazorAdmin": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

@@ -1,9 +1,9 @@
-using Cloud5mins.ShortenerTools.Core.Domain;
+using LettrLabs.UrlShorterner.Core.Domain;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Cloud5mins.ShortenerTools
+namespace LettrLabs.UrlShorterner
 {
     public class Program
     {

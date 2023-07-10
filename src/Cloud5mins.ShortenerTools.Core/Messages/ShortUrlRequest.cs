@@ -1,7 +1,7 @@
-using Cloud5mins.ShortenerTools.Core.Domain;
+using LettrLabs.UrlShorterner.Core.Domain;
 using System.ComponentModel.DataAnnotations;
 
-namespace Cloud5mins.ShortenerTools.Core.Messages
+namespace LettrLabs.UrlShorterner.Core.Messages
 {
     public class ShortUrlRequest
     {

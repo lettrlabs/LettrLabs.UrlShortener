@@ -224,7 +224,7 @@
                 "repositoryUrl": "[parameters('GitHubURL')]",
                 "branch": "[parameters('GitHubBranch')]",
                 "buildProperties": {
-                    "appLocation": "./src/Cloud5mins.ShortenerTools.TinyBlazorAdmin",
+                    "appLocation": "./src/LettrLabs.UrlShorterner.TinyBlazorAdmin",
                     "outputLocation": "wwwroot"
                 },
                 "stagingEnvironmentPolicy": "Enabled",

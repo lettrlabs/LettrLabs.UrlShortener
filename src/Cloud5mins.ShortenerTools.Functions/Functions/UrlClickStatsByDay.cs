@@ -22,8 +22,8 @@ Output:
     "url": ""https://c5m.ca/29"
 */
 
-using Cloud5mins.ShortenerTools.Core.Domain;
-using Cloud5mins.ShortenerTools.Core.Messages;
+using LettrLabs.UrlShorterner.Core.Domain;
+using LettrLabs.UrlShorterner.Core.Messages;
 using Google.Protobuf.WellKnownTypes;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
@@ -36,7 +36,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Cloud5mins.ShortenerTools.Functions
+namespace LettrLabs.UrlShorterner.Functions
 {
     public class UrlClickStatsByDay
     {

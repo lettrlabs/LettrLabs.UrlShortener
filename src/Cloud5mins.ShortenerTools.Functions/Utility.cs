@@ -1,4 +1,4 @@
-using Cloud5mins.ShortenerTools.Core.Domain;
+using LettrLabs.UrlShorterner.Core.Domain;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 
 
-namespace Cloud5mins.ShortenerTools
+namespace LettrLabs.UrlShorterner
 {
     public static class Utility
     {

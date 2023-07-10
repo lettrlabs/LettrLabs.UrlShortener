@@ -1,7 +1,7 @@
 using Cronos;
 using System;
 
-namespace Cloud5mins.ShortenerTools.Core.Domain
+namespace LettrLabs.UrlShorterner.Core.Domain
 {
     public class Schedule
     {

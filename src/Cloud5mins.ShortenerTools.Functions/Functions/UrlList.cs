@@ -15,8 +15,8 @@ Output:
     }
 */
 
-using Cloud5mins.ShortenerTools.Core.Domain;
-using Cloud5mins.ShortenerTools.Core.Messages;
+using LettrLabs.UrlShorterner.Core.Domain;
+using LettrLabs.UrlShorterner.Core.Messages;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
@@ -26,7 +26,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Cloud5mins.ShortenerTools.Functions
+namespace LettrLabs.UrlShorterner.Functions
 {
     public class UrlList
     {

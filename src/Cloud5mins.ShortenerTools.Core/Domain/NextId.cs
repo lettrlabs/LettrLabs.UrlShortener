@@ -1,6 +1,6 @@
 using Microsoft.Azure.Cosmos.Table;
 
-namespace Cloud5mins.ShortenerTools.Core.Domain
+namespace LettrLabs.UrlShorterner.Core.Domain
 {
     public class NextId : TableEntity
     {

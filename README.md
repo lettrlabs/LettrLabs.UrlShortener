@@ -36,7 +36,7 @@ If you want to **Update** or **Upgrade**, please refer to [this page](https://gi
 
 AzUrlShortener is an API that doesn't have any admin UI by default. There are many different ways to manage your Short Urls, from a direct HTTP call to a fancy website. 
 
-We suggest [Tiny Blazor Admin](./src/Cloud5mins.ShortenerTools.TinyBlazorAdmin/README.md); it's a static website. 
+We suggest [Tiny Blazor Admin](./src/LettrLabs.UrlShorterner.TinyBlazorAdmin/README.md); it's a static website. 
 
 ![Tiny Blazor Admin looks](/Media/TinyBlazorAdmin.gif)
 
