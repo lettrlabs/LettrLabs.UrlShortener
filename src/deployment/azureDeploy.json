@@ -17,7 +17,7 @@
             }
         },
         "defaultRedirectUrl": {
-            "defaultValue": "https://azure.com",
+            "defaultValue": "https://lettrlabs.com",
             "type": "string",
             "metadata": {
                 "description": "Default URL used when key passed by the user is not found."
@@ -25,7 +25,7 @@
         },
         "GitHubURL": {
             "type": "string",
-            "defaultValue": "https://github.com/microsoft/AzUrlShortener.git",
+            "defaultValue": "https://github.com/lettrlabs/AzUrlShortener.git",
             "metadata": {
                 "description": "The URL of GitHub (ending by .git)"
             }
@@ -46,7 +46,7 @@
         },
         "OwnerName": {
             "type": "string",
-            "defaultValue": "",
+            "defaultValue": "Hugo Forte",
             "metadata": {
                 "description": "Owner of this deployment, person to contact for question."
             }
@@ -58,7 +58,7 @@
         "swaName": "[parameters('existingSWAName')]",
         "deployTinyBlazorAdmin": "[if(equals(parameters('existingSWAName'), 'SKIP-THIS-RESOURCE'), 'false', 'true')]",
         "storageAccountName": "[tolower(concat(substring(parameters('baseName'), 0, min(length(parameters('baseName')),16)), variables('suffix'), 'sa'))]",
-        "funcHhostingPlanName": "[concat(substring(parameters('baseName'), 0, min(length(parameters('baseName')),13)), '-', variables('suffix'), '-asp')]",
+        "funcHostingPlanName": "[concat(substring(parameters('baseName'), 0, min(length(parameters('baseName')),13)), '-', variables('suffix'), '-asp')]",
         "insightsAppName": "[concat(substring(parameters('baseName'), 0, min(length(parameters('baseName')),13)), '-', variables('suffix'), '-ai')]",
         "functionProjectFolder": "src"
     },
@@ -75,7 +75,7 @@
             },
             "dependsOn": [
                 "[concat('microsoft.insights/components/', variables('insightsAppName'))]",
-                "[concat('Microsoft.Web/serverfarms/', variables('funcHhostingPlanName'))]",
+                "[concat('Microsoft.Web/serverfarms/', variables('funcHostingPlanName'))]",
                 "[concat('Microsoft.Storage/storageAccounts/',variables('storageAccountName'))]"
             ],
             "properties": {
@@ -120,7 +120,7 @@
                         }
                     ]
                 },
-                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms/', variables('funcHhostingPlanName'))]",
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms/', variables('funcHostingPlanName'))]",
                 "use32BitWorkerProcess": true,
                 "netFrameworkVersion": "v6.0",
                 "clientAffinityEnabled": true
@@ -159,7 +159,7 @@
         },
         {
             "apiVersion": "2021-03-01",
-            "name": "[variables('funcHhostingPlanName')]",
+            "name": "[variables('funcHostingPlanName')]",
             "type": "Microsoft.Web/serverfarms",
             "location": "[resourceGroup().location]",
             "kind": "",
@@ -168,7 +168,7 @@
                 "ExpireOn": "[parameters('ExpireOn')]"
             },
             "properties": {
-                "name": "[variables('funcHhostingPlanName')]",
+                "name": "[variables('funcHostingPlanName')]",
                 "computeMode": "Dynamic"
             },
             "sku": {
