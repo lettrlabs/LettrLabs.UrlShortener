@@ -1,18 +1,21 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-        "baseName": {
-            "value": "AzUrlShortTools"
-        },
-        "OwnerName": {
-            "value": "Hugo Forte"
-        },
-        "GitHubBranch": {
-            "value": "main"
-        },
-        "defaultRedirectUrl": {
-            "value": "https://lettrlabs.com"
-        }
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "environment": {
+      "value": "dev"
+    },
+    "baseName": {
+      "value": "lettrlabs-urlshortener"
+    },
+    "OwnerName": {
+      "value": "Hugo Forte"
+    },
+    "GitHubBranch": {
+      "value": "main"
+    },
+    "defaultRedirectUrl": {
+      "value": "https://lettrlabs.com"
     }
+  }
 }

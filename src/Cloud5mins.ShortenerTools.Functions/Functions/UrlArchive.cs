@@ -52,7 +52,7 @@ namespace LettrLabs.UrlShorterner.Functions
 
         [Function("UrlArchive")]
         public async Task<HttpResponseData> Run(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "api/UrlArchive")] HttpRequestData req,
+        [HttpTrigger(AuthorizationLevel.Function, "post", Route = "api/UrlArchive")] HttpRequestData req,
         ExecutionContext context)
         {
             _logger.LogInformation($"HTTP trigger - UrlArchive");
