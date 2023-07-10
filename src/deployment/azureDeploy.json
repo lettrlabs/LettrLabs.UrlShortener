@@ -64,7 +64,7 @@
     "funcAppName": "[[concat(parameters('baseName'), variables('suffix')]",
     "swaName": "[parameters('existingSWAName')]",
     "deployTinyBlazorAdmin": "[if(equals(parameters('existingSWAName'), 'SKIP-THIS-RESOURCE'), 'false', 'true')]",
-    "storageAccountName": "[tolower(concat(parameters('baseName'), variables('suffix'), 'sa'))]",
+    "storageAccountName": "[tolower(concat(parameters('baseName'), parameters('environment'), 'sa'))]",
     "funcHostingPlanName": "[concat(substring(parameters('baseName'), 0, min(length(parameters('baseName')),13)), '-', variables('suffix'), '-asp')]",
     "insightsAppName": "[concat(substring(parameters('baseName'), 0, min(length(parameters('baseName')),13)), '-', variables('suffix'), '-ai')]",
     "functionProjectFolder": "src"
