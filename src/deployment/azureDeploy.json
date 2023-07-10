@@ -61,7 +61,7 @@
   },
   "variables": {
     "suffix": "[concat('-', parameters('environment'))]",
-    "funcAppName": "[[concat(parameters('baseName'), variables('suffix')]",
+    "funcAppName": "[concat(parameters('baseName'), variables('suffix'))]",
     "swaName": "[parameters('existingSWAName')]",
     "deployTinyBlazorAdmin": "[if(equals(parameters('existingSWAName'), 'SKIP-THIS-RESOURCE'), 'false', 'true')]",
     "storageAccountName": "[tolower(concat(substring(parameters('baseName'), 0, min(length(parameters('baseName')),16)), parameters('environment'), 'sa'))]",
