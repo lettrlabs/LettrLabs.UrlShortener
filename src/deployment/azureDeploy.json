@@ -16,6 +16,13 @@
         "description": "Name used as base-template to name the resources to be deployed in Azure."
       }
     },
+    "storageAccountName": {
+      "defaultValue": "lettrlabsurlshortener",
+      "type": "string",
+      "metadata": {
+        "description": "Name to be used for the storage account"
+      }
+    },
     "existingSWAName": {
       "type": "string",
       "defaultValue": "SKIP-THIS-RESOURCE",
@@ -64,7 +71,7 @@
     "funcAppName": "[concat(parameters('baseName'), variables('suffix'))]",
     "swaName": "[parameters('existingSWAName')]",
     "deployTinyBlazorAdmin": "[if(equals(parameters('existingSWAName'), 'SKIP-THIS-RESOURCE'), 'false', 'true')]",
-    "storageAccountName": "[tolower(concat(substring(replace(parameters('storageAccountName'), '-', ''), 0, min(length(replace(parameters('baseName'), '-', '')),16)), parameters('environment'), 'sa'))]",
+    "storageAccountName": "[tolower(concat(substring(parameters('storageAccountName'), 0, min(length(parameters('storageAccountName')),16)), parameters('environment'), 'sa'))]",
     "funcHostingPlanName": "[concat(substring(parameters('baseName'), 0, min(length(parameters('baseName')),13)), '-', variables('suffix'), '-asp')]",
     "insightsAppName": "[concat(substring(parameters('baseName'), 0, min(length(parameters('baseName')),13)), '-', variables('suffix'), '-ai')]",
     "functionProjectFolder": "src"
