@@ -1,3 +1,8 @@
+# Azure Url Shortener Environments
+dev: lettrlabs-azurlshortener-dev
+prod: lettrlabs-azurlshortener
+uat: lettrlabs-azurlshortener-uat
+
 # Azure Url Shortener (AzUrlShortener)
 
 [![Deploy to Azure](https://img.shields.io/badge/Deploy%20To-Azure-blue?logo=microsoft-azure)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Flettrlabs%2FAzUrlShortener%2Fmain%2Fsrc%2Fdeployment%2FazureDeploy.json)
@@ -23,9 +28,9 @@ Features:
 
 ## How To Deploy
 
-👉 **[Step by Step Deployment](https://github.com/lettrlabs/AzUrlShortener/wiki/How-to-deploy-your-AzUrlShortener)** (wiki pages) 👈 documentation is available here. If you would like to used the TinyBlazorAdmin as frontend (suggested) **you must first** follow the [steps to follow for TinyBlazorAdmin](https://github.com/lettrlabs/AzUrlShortener/wiki/How-to-deploy-TinyBlazorAdmin).
+👉 **[Step by Step Deployment](https://github.com/microsoft/AzUrlShortener/wiki/How-to-deploy-your-AzUrlShortener)** (wiki pages) 👈 documentation is available here. If you would like to used the TinyBlazorAdmin as frontend (suggested) **you must first** follow the [steps to follow for TinyBlazorAdmin](https://github.com/microsoft/AzUrlShortener/wiki/How-to-deploy-TinyBlazorAdmin).
 
-If you want to **Update** or **Upgrade**, please refer to [this page](https://github.com/lettrlabs/AzUrlShortener/wiki/How-to-Update---Upgrade) (wiki pages). 
+If you want to **Update** or **Upgrade**, please refer to [this page](https://github.com/microsoft/AzUrlShortener/wiki/How-to-Update---Upgrade) (wiki pages). 
 
 ## How To Use It
 
@@ -37,13 +42,13 @@ We suggest [Tiny Blazor Admin](./src/Cloud5mins.ShortenerTools.TinyBlazorAdmin/R
 
 By default, without any specific Admin tool, you can use an API client like [Postman](https://www.postman.com/) or a plugin to VSCode like [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client). We've included simple API calls via a postman collection and environment [here](./src/tools).
 
-You can also directly update the tables in storage using [Azure Storage Explorer](https://github.com/lettrlabs/AzUrlShortener/wiki/How-to-Use-Azure-Storage-Explorer-as-Admin-Tools-for-AzUrlShortener). 
+You can also directly update the tables in storage using [Azure Storage Explorer](https://github.com/microsoft/AzUrlShortener/wiki/How-to-Use-Azure-Storage-Explorer-as-Admin-Tools-for-AzUrlShortener). 
 
 ---
 
 ## How It Works
 
-If you are interested to learn more about what's under the hood, and get more details on each Azure Function, read the [How it works](https://github.com/lettrlabs/AzUrlShortener/wiki/how-it-works) page.
+If you are interested to learn more about what's under the hood, and get more details on each Azure Function, read the [How it works](https://github.com/microsoft/AzUrlShortener/wiki/how-it-works) page.
 
 There is also a videos that explains a bit how things works and does a quick tour of the project.
 
