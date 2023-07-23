@@ -21,21 +21,25 @@ namespace LettrLabs.UrlShorterner
         //sets the length of the unique code to add to vanity
         private const int MinVanityCodeLength = 5;
 
-        public static async Task<string> GetValidEndUrl(string vanity, StorageTableHelper stgHelper)
+        public static async Task<string> GetValidEndUrl(
+            //string vanity, 
+            StorageTableHelper stgHelper)
         {
-            if (string.IsNullOrEmpty(vanity))
-            {
+            //if (string.IsNullOrEmpty(vanity))
+            //{
                 var newKey = await stgHelper.GetNextTableId();
                 string getCode() => Encode(newKey);
                 if (await stgHelper.IfShortUrlEntityExistByVanity(getCode()))
-                    return await GetValidEndUrl(vanity, stgHelper);
+                    return await GetValidEndUrl(
+                        //vanity, 
+                        stgHelper);
 
                 return string.Join(string.Empty, getCode());
-            }
-            else
-            {
-                return string.Join(string.Empty, vanity);
-            }
+            //}
+            //else
+            //{
+            //    return string.Join(string.Empty, vanity);
+            //}
         }
 
         public static string Encode(int i)

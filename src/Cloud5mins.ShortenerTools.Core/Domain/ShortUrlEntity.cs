@@ -1,13 +1,14 @@
+using LettrLabs.UrlShorterner.Core.Messages;
 using Microsoft.Azure.Cosmos.Table;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 
 namespace LettrLabs.UrlShorterner.Core.Domain
 {
     public class ShortUrlEntity : TableEntity
     {
+        private string _title;
+        private ShortRequest _input;
+
         public string Url { get; set; }
         private string _activeUrl { get; set; }
 
@@ -26,11 +27,14 @@ namespace LettrLabs.UrlShorterner.Core.Domain
 
         public string ShortUrl { get; set; }
 
+        public int ProfileId { get; set; }
+        public int OrderId { get; set; }
+        public int OrderRecipientId { get; set; }
+        public int ProfileRecipientId { get; set; }
+        public string OrderRecipientName { get; set; }
         public int Clicks { get; set; }
-
         public bool? IsArchived { get; set; }
         public string SchedulesPropertyRaw { get; set; }
-
         private List<Schedule> _schedules { get; set; }
 
         [IgnoreProperty]
@@ -40,7 +44,7 @@ namespace LettrLabs.UrlShorterner.Core.Domain
             {
                 if (_schedules == null)
                 {
-                    if (String.IsNullOrEmpty(SchedulesPropertyRaw))
+                    if (string.IsNullOrEmpty(SchedulesPropertyRaw))
                     {
                         _schedules = new List<Schedule>();
                     }
@@ -59,19 +63,34 @@ namespace LettrLabs.UrlShorterner.Core.Domain
 
         public ShortUrlEntity() { }
 
+        //public ShortUrlEntity(ShortRequest shortRequest)
+        //{
+        //    Initialize(shortRequest);
+        //}
+
         public ShortUrlEntity(string longUrl, string endUrl)
         {
             Initialize(longUrl, endUrl, string.Empty, null);
         }
 
-        public ShortUrlEntity(string longUrl, string endUrl, Schedule[] schedules)
-        {
-            Initialize(longUrl, endUrl, string.Empty, schedules);
-        }
+        //public ShortUrlEntity(string longUrl, string endUrl, Schedule[] schedules)
+        //{
+        //    Initialize(longUrl, endUrl, string.Empty, schedules);
+        //}
 
         public ShortUrlEntity(string longUrl, string endUrl, string title, Schedule[] schedules)
         {
             Initialize(longUrl, endUrl, title, schedules);
+        }
+
+        public ShortUrlEntity(string longUrl, string endUrl, string title, ShortRequest input)
+        {
+            Initialize(longUrl, endUrl, title, input.Schedules);
+            OrderId = input.OrderId;
+            OrderRecipientId = input.OrderRecipientId;
+            ProfileId = input.ProfileId;
+            ProfileRecipientId = input.ProfileRecipientId;
+            OrderRecipientName = input.OrderRecipientName;
         }
 
         private void Initialize(string longUrl, string endUrl, string title, Schedule[] schedules)
@@ -90,17 +109,17 @@ namespace LettrLabs.UrlShorterner.Core.Domain
             }
         }
 
-        public static ShortUrlEntity GetEntity(string longUrl, string endUrl, string title, Schedule[] schedules)
-        {
-            return new ShortUrlEntity
-            {
-                PartitionKey = endUrl.First().ToString(),
-                RowKey = endUrl,
-                Url = longUrl,
-                Title = title,
-                Schedules = schedules.ToList<Schedule>()
-            };
-        }
+        //public static ShortUrlEntity GetEntity(string longUrl, string endUrl, string title, Schedule[] schedules)
+        //{
+        //    return new ShortUrlEntity
+        //    {
+        //        PartitionKey = endUrl.First().ToString(),
+        //        RowKey = endUrl,
+        //        Url = longUrl,
+        //        Title = title,
+        //        Schedules = schedules.ToList<Schedule>()
+        //    };
+        //}
 
         private string GetActiveUrl()
         {

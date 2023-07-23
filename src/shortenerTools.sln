@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LettrLabs.UrlShorterner.Fun
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LettrLabs.UrlShorterner.Core", "Cloud5mins.ShortenerTools.Core\LettrLabs.UrlShorterner.Core.csproj", "{7449639F-62CD-4B2C-AB98-58C85904FDC4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LettrLabs.UrlShorterner.TinyBlazorAdmin", "Cloud5mins.ShortenerTools.TinyBlazorAdmin\LettrLabs.UrlShorterner.TinyBlazorAdmin.csproj", "{B5FB0C0A-05BA-491B-9379-CE4BDF025B3B}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{362C2DD0-9568-4C53-B30F-9195C80FDF28}"
 	ProjectSection(SolutionItems) = preProject
 		deployment\azureDeploy.json = deployment\azureDeploy.json
@@ -33,10 +31,6 @@ Global
 		{7449639F-62CD-4B2C-AB98-58C85904FDC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7449639F-62CD-4B2C-AB98-58C85904FDC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7449639F-62CD-4B2C-AB98-58C85904FDC4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B5FB0C0A-05BA-491B-9379-CE4BDF025B3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B5FB0C0A-05BA-491B-9379-CE4BDF025B3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B5FB0C0A-05BA-491B-9379-CE4BDF025B3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B5FB0C0A-05BA-491B-9379-CE4BDF025B3B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
