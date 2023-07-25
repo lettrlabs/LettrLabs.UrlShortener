@@ -7,12 +7,11 @@ namespace LettrLabs.UrlShorterner.Core.Messages
         public string Title { get; set; }
 
         public ShortResponse() { }
-        public ShortResponse(string host, string longUrl, string endUrl, string title)
+        public ShortResponse(string scheme, string host, string longUrl, string endUrl, string title)
         {
             LongUrl = longUrl;
-            ShortUrl = string.Concat(host, "/", endUrl);
+            ShortUrl = string.Concat(scheme, "://", host, "/", endUrl);
             Title = title;
-
         }
     }
 }

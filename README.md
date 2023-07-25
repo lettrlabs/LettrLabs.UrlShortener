@@ -1,7 +1,7 @@
 # Azure Url Shortener Environments
-dev: lettrlabs-azurlshortener-dev
-prod: lettrlabs-azurlshortener
-uat: lettrlabs-azurlshortener-uat
+dev: lettrlabs-urlshortener-dev
+prod: lettrlabs-urlshortener-prd
+uat: lettrlabs-urlshortener-uat
 
 # Azure Url Shortener (AzUrlShortener)
 

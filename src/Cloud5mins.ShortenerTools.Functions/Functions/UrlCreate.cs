@@ -84,6 +84,12 @@ namespace LettrLabs.UrlShorterner.Functions
                 }
 
                 // Validates if input.url is a valid absolute url, aka is a complete reference to the resource, ex: http(s)://google.com
+                //if input.Url does not begin with http:// or https://, add https:// to the beginning of input.Url
+                if (!input.Url.StartsWith("https://") && !input.Url.StartsWith("http://"))
+                {
+                    input.Url = "https://" + input.Url;
+                }
+
                 if (!Uri.IsWellFormedUriString(input.Url, UriKind.Absolute))
                 {
                     var badResponse = req.CreateResponse(HttpStatusCode.BadRequest);
@@ -96,7 +102,6 @@ namespace LettrLabs.UrlShorterner.Functions
                 string longUrl = input.Url.Trim();
                 //string vanity = string.IsNullOrWhiteSpace(input.Vanity) ? "" : input.Vanity.Trim();
                 string title = string.IsNullOrWhiteSpace(input.Title) ? "" : input.Title.Trim();
-
 
                 ShortUrlEntity newRow;
 
@@ -121,7 +126,7 @@ namespace LettrLabs.UrlShorterner.Functions
                 await stgHelper.SaveShortUrlEntity(newRow);
 
                 var host = string.IsNullOrEmpty(_settings.CustomDomain) ? req.Url.Host : _settings.CustomDomain.ToString();
-                result = new ShortResponse(host, newRow.Url, newRow.RowKey, newRow.Title);
+                result = new ShortResponse(req.Url.Scheme, host, newRow.Url, newRow.RowKey, newRow.Title);
 
                 _logger.LogInformation("Short Url created.");
             }
