@@ -29,6 +29,7 @@ Output:
 */
 
 using LettrLabs.UrlShorterner.Core.Domain;
+
 // using Microsoft.Azure.WebJobs;
 // using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.Functions.Worker;
@@ -41,7 +42,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace LettrLabs.UrlShorterner.Functions
+namespace LettrLabs.UrlShorterner.Functions.Functions.Archived
 {
     public class UrlUpdate
     {

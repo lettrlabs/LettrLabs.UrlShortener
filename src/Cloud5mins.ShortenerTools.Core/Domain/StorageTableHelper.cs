@@ -67,6 +67,26 @@ namespace LettrLabs.UrlShorterner.Core.Domain
             return lstShortUrl;
         }
 
+        public async Task<List<ShortUrlEntity>> GetAllShortUrlEntitiesByOrderIds(IList<int> orderIds)
+        {
+            var tblUrls = GetUrlsTable();
+            TableContinuationToken token = null;
+            var lstShortUrl = new List<ShortUrlEntity>();
+            do
+            {
+                string filter = string.Join(" or ", orderIds.Select(id => TableQuery.GenerateFilterConditionForInt("OrderId", QueryComparisons.Equal, id)));
+                // Retreiving all entities that are NOT the NextId entity 
+                // (it's the only one in the partion "KEY")
+                TableQuery<ShortUrlEntity> rangeQuery = new TableQuery<ShortUrlEntity>().Where(filter);
+
+                var queryResult = await tblUrls.ExecuteQuerySegmentedAsync(rangeQuery, token);
+                lstShortUrl.AddRange(queryResult.Results);
+                token = queryResult.ContinuationToken;
+            } while (token != null);
+            return lstShortUrl;
+        }
+
+
         /// <summary>
         /// Returns the ShortUrlEntity of the <paramref name="vanity"/>
         /// </summary>
@@ -178,7 +198,6 @@ namespace LettrLabs.UrlShorterner.Core.Domain
             } while (token != null);
             return lstShortUrl;
         }
-
 
         public async Task<ShortUrlEntity> ArchiveShortUrlEntity(ShortUrlEntity urlEntity)
         {

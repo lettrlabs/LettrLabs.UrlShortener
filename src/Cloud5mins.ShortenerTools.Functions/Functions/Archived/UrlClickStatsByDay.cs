@@ -24,7 +24,6 @@ Output:
 
 using LettrLabs.UrlShorterner.Core.Domain;
 using LettrLabs.UrlShorterner.Core.Messages;
-using Google.Protobuf.WellKnownTypes;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
@@ -36,7 +35,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace LettrLabs.UrlShorterner.Functions
+namespace LettrLabs.UrlShorterner.Functions.Functions.Archived
 {
     public class UrlClickStatsByDay
     {
@@ -87,7 +86,7 @@ namespace LettrLabs.UrlShorterner.Functions
                                             {
                                                 DateClicked = stat.Key.ToString("yyyy-MM-dd"),
                                                 Count = stat.Count()
-                                            }).OrderBy(s => DateTime.Parse(s.DateClicked).Date).ToList<ClickDate>();
+                                            }).OrderBy(s => DateTime.Parse(s.DateClicked).Date).ToList();
 
                 var host = string.IsNullOrEmpty(_settings.CustomDomain) ? req.Url.Host : _settings.CustomDomain.ToString();
                 result.Url = Utility.GetShortUrl(host, input.Vanity);

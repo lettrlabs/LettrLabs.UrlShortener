@@ -22,6 +22,7 @@ Output:
 
 using LettrLabs.UrlShorterner.Core.Domain;
 using LettrLabs.UrlShorterner.Core.Messages;
+using LettrLabs.UrlShorterner.Functions.Functions.Archived;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
@@ -52,7 +53,7 @@ namespace LettrLabs.UrlShorterner.Functions
             ExecutionContext context
         )
         {
-            _logger.LogInformation($"__trace creating shortURL: {req}");
+            _logger.LogInformation("Creating shortURL: {Request}", req);
             string userId = string.Empty;
             ShortRequest input;
             var result = new ShortResponse();
@@ -104,24 +105,7 @@ namespace LettrLabs.UrlShorterner.Functions
                 string title = string.IsNullOrWhiteSpace(input.Title) ? "" : input.Title.Trim();
 
                 ShortUrlEntity newRow;
-
-                //if (!string.IsNullOrEmpty(vanity))
-                //{
-                //    newRow = new ShortUrlEntity(longUrl, vanity, title, input.Schedules);
-                //    if (await stgHelper.IfShortUrlEntityExist(newRow))
-                //    {
-                //        var badResponse = req.CreateResponse(HttpStatusCode.Conflict);
-                //        await badResponse.WriteAsJsonAsync(new { Message = "This Short URL already exist." });
-                //        return badResponse;
-                //    }
-                //}
-                //else
-                //{
-                    //newRow = new ShortUrlEntity(longUrl, await Utility.GetValidEndUrl(
-                    //    //vanity, 
-                    //    stgHelper), title, input.Schedules);
                 newRow = new ShortUrlEntity(longUrl, await Utility.GetValidEndUrl(stgHelper), title, input);
-                //}
 
                 await stgHelper.SaveShortUrlEntity(newRow);
 

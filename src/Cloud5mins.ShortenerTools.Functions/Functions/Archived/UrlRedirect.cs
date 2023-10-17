@@ -6,7 +6,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace LettrLabs.UrlShorterner.Functions
+namespace LettrLabs.UrlShorterner.Functions.Functions.Archived
 {
     public class UrlRedirect
     {
