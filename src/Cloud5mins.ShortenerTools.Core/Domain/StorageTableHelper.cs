@@ -75,6 +75,8 @@ namespace LettrLabs.UrlShorterner.Core.Domain
             do
             {
                 string filter = string.Join(" or ", orderIds.Select(id => TableQuery.GenerateFilterConditionForInt("OrderId", QueryComparisons.Equal, id)));
+                //Append filter where "clicks" > 0
+                filter = TableQuery.CombineFilters(filter, TableOperators.And, TableQuery.GenerateFilterConditionForInt("Clicks", QueryComparisons.GreaterThan, 0));
                 // Retreiving all entities that are NOT the NextId entity 
                 // (it's the only one in the partion "KEY")
                 TableQuery<ShortUrlEntity> rangeQuery = new TableQuery<ShortUrlEntity>().Where(filter);
