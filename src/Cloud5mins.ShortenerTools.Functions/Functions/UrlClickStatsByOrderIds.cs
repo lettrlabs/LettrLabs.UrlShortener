@@ -66,12 +66,15 @@ namespace LettrLabs.UrlShorterner.Functions.Functions.Archived
                     }
                 }
 
-                result.UrlList = await stgHelper.GetAllShortUrlEntitiesByOrderIds(input.OrderIds);
-                result.UrlList = result.UrlList.Where(p => !(p.IsArchived ?? false)).ToList();
-                var host = string.IsNullOrEmpty(_settings.CustomDomain) ? req.Url.Host : _settings.CustomDomain;
-                foreach (ShortUrlEntity url in result.UrlList)
+                if (input.OrderIds.Any())
                 {
-                    url.ShortUrl = Utility.GetShortUrl(host, url.RowKey);
+                    result.UrlList = await stgHelper.GetAllShortUrlEntitiesByOrderIds(input.OrderIds);
+                    result.UrlList = result.UrlList.Where(p => !(p.IsArchived ?? false)).ToList();
+                    var host = string.IsNullOrEmpty(_settings.CustomDomain) ? req.Url.Host : _settings.CustomDomain;
+                    foreach (ShortUrlEntity url in result.UrlList)
+                    {
+                        url.ShortUrl = Utility.GetShortUrl(host, url.RowKey);
+                    }
                 }
             }
             catch (Exception ex)
