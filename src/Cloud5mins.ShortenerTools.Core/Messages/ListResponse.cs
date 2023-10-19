@@ -7,7 +7,9 @@ namespace LettrLabs.UrlShorterner.Core.Messages
     {
         public List<ShortUrlEntity> UrlList { get; set; }
 
-        public ListResponse() { }
+        public ListResponse() { 
+            UrlList = new List<ShortUrlEntity>();
+        }
         public ListResponse(List<ShortUrlEntity> list)
         {
             UrlList = list;
