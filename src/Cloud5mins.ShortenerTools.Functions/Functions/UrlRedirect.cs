@@ -26,8 +26,8 @@ namespace LettrLabs.UrlShorterner.Functions.Functions.Archived
             string shortUrl,
             ExecutionContext context)
         {
+            _logger.LogInformation("Looking for: {RedirectUrl} to redirect", shortUrl);
             string redirectUrl = "https://azure.com";
-
 
             if (!string.IsNullOrWhiteSpace(shortUrl))
             {
@@ -36,11 +36,12 @@ namespace LettrLabs.UrlShorterner.Functions.Functions.Archived
                 StorageTableHelper stgHelper = new StorageTableHelper(_settings.DataStorage);
 
                 var tempUrl = new ShortUrlEntity(string.Empty, shortUrl);
-                var newUrl = await stgHelper.GetShortUrlEntity(tempUrl);
+                ShortUrlEntity newUrl = await stgHelper.GetShortUrlEntity(tempUrl);
 
                 if (newUrl != null)
                 {
-                    _logger.LogInformation($"Found it: {newUrl.Url}");
+                    _logger.LogInformation("Found redirect for: {RedirectUrl} to {DestinationUrl} for order {OrderId} for {OrderRecipientId} {OrderRecipientName}"
+                        , shortUrl, newUrl.Url, newUrl.OrderId, newUrl.OrderRecipientId, newUrl.OrderRecipientName);
                     newUrl.Clicks++;
                     await stgHelper.SaveClickStatsEntity(new ClickStatsEntity(newUrl.RowKey));
                     await stgHelper.SaveShortUrlEntity(newUrl);
@@ -49,13 +50,13 @@ namespace LettrLabs.UrlShorterner.Functions.Functions.Archived
             }
             else
             {
-                _logger.LogInformation("Bad Link, resorting to fallback.");
+                _logger.LogInformation("Bad Link - or no link found for {RedirectUrl}, resorting to fallback.", shortUrl);
             }
 
+            _logger.LogInformation("Redirecting to {RedirectUrl}", redirectUrl);
             var res = req.CreateResponse(HttpStatusCode.Redirect);
             res.Headers.Add("Location", redirectUrl);
             return res;
-
         }
     }
 }

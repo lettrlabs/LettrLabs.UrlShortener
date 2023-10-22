@@ -40,6 +40,7 @@ namespace LettrLabs.UrlShorterner.Functions
     {
         private readonly ILogger _logger;
         private readonly ShortenerSettings _settings;
+        private ShortResponse result;
 
         public UrlCreate(ILoggerFactory loggerFactory, ShortenerSettings settings)
         {
@@ -53,10 +54,8 @@ namespace LettrLabs.UrlShorterner.Functions
             ExecutionContext context
         )
         {
-            _logger.LogInformation("Creating shortURL: {Request}", req);
-            string userId = string.Empty;
+            _logger.LogInformation("Creating shortURL");
             ShortRequest input;
-            var result = new ShortResponse();
 
             try
             {
@@ -79,6 +78,7 @@ namespace LettrLabs.UrlShorterner.Functions
                 // If the Url parameter only contains whitespaces or is empty return with BadRequest.
                 if (string.IsNullOrWhiteSpace(input.Url))
                 {
+                    _logger.LogError("Input url is null or empty");
                     var badResponse = req.CreateResponse(HttpStatusCode.BadRequest);
                     await badResponse.WriteAsJsonAsync(new { Message = "The url parameter can not be empty." });
                     return badResponse;
@@ -93,11 +93,13 @@ namespace LettrLabs.UrlShorterner.Functions
 
                 if (!Uri.IsWellFormedUriString(input.Url, UriKind.Absolute))
                 {
+                    _logger.LogError("Input url '{DestinationUrl}' is not well formed", input.Url);
                     var badResponse = req.CreateResponse(HttpStatusCode.BadRequest);
                     await badResponse.WriteAsJsonAsync(new { Message = $"{input.Url} is not a valid absolute Url. The Url parameter must start with 'http://' or 'http://'." });
                     return badResponse;
                 }
 
+                _logger.LogInformation("Creating shortURL for {DestinationUrl}", input.Url);
                 StorageTableHelper stgHelper = new StorageTableHelper(_settings.DataStorage);
 
                 string longUrl = input.Url.Trim();
@@ -112,11 +114,12 @@ namespace LettrLabs.UrlShorterner.Functions
                 var host = string.IsNullOrEmpty(_settings.CustomDomain) ? req.Url.Host : _settings.CustomDomain.ToString();
                 result = new ShortResponse(req.Url.Scheme, host, newRow.Url, newRow.RowKey, newRow.Title);
 
-                _logger.LogInformation("Short Url created.");
+                _logger.LogInformation("Short Url created {RedirectUrl} redirecting to {DestinationUrl} for order {OrderId} for {CustomerName}",
+                    result.ShortUrl, longUrl, input.OrderId, input.OrderRecipientName);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An unexpected error was encountered.");
+                _logger.LogError("An unexpected error was encountered. {Exception}", ex);
 
                 var badResponse = req.CreateResponse(HttpStatusCode.BadRequest);
                 await badResponse.WriteAsJsonAsync(new { ex.Message });

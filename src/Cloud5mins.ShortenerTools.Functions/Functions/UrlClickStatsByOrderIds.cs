@@ -46,7 +46,7 @@ namespace LettrLabs.UrlShorterner.Functions.Functions.Archived
         public async Task<HttpResponseData> Run(
         [HttpTrigger(AuthorizationLevel.Function, "post", Route = "api/UrlClickStatsByOrderIds")] HttpRequestData req, ExecutionContext context)
         {
-            _logger.LogInformation($"Starting UrlClickStatsByOrderIds...");
+            _logger.LogInformation("Starting UrlClickStatsByOrderIds");
 
             var result = new ListResponse();
             string userId = string.Empty;
@@ -79,10 +79,10 @@ namespace LettrLabs.UrlShorterner.Functions.Functions.Archived
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An unexpected error was encountered.");
-                var badres = req.CreateResponse(HttpStatusCode.BadRequest);
-                await badres.WriteAsJsonAsync(new { ex.Message });
-                return badres;
+                _logger.LogError("An unexpected error was encountered {Exception}", ex);
+                var badRequest = req.CreateResponse(HttpStatusCode.BadRequest);
+                await badRequest.WriteAsJsonAsync(new { ex.Message });
+                return badRequest;
             }
 
             var response = req.CreateResponse(HttpStatusCode.OK);
