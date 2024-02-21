@@ -36,15 +36,15 @@ namespace LettrLabs.UrlShorterner.Functions.Functions.Archived
                 StorageTableHelper stgHelper = new StorageTableHelper(_settings.DataStorage);
 
                 var tempUrl = new ShortUrlEntity(string.Empty, shortUrl);
-                ShortUrlEntity newUrl = await stgHelper.GetShortUrlEntity(tempUrl);
+                ShortUrlEntity newUrl = await stgHelper.GetShortUrlEntityAsync(tempUrl);
 
                 if (newUrl != null)
                 {
                     _logger.LogInformation("Found redirect for: {RedirectUrl} to {DestinationUrl} for order {OrderId} for {OrderRecipientId} {OrderRecipientName}"
                         , shortUrl, newUrl.Url, newUrl.OrderId, newUrl.OrderRecipientId, newUrl.OrderRecipientName);
                     newUrl.Clicks++;
-                    await stgHelper.SaveClickStatsEntity(new ClickStatsEntity(newUrl.RowKey));
-                    await stgHelper.SaveShortUrlEntity(newUrl);
+                    await stgHelper.SaveClickStatsEntityAsync(new ClickStatsEntity(newUrl.RowKey));
+                    await stgHelper.SaveShortUrlEntityAsync(newUrl);
                     redirectUrl = WebUtility.UrlDecode(newUrl.ActiveUrl);
                 }
             }

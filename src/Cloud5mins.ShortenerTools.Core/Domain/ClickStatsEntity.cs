@@ -1,5 +1,4 @@
 using Microsoft.Azure.Cosmos.Table;
-using System;
 
 namespace LettrLabs.UrlShorterner.Core.Domain
 {

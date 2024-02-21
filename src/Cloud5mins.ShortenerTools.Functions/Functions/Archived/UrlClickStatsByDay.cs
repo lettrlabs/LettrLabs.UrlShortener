@@ -79,7 +79,7 @@ namespace LettrLabs.UrlShorterner.Functions.Functions.Archived
 
                 StorageTableHelper stgHelper = new StorageTableHelper(_settings.DataStorage);
 
-                var rawStats = await stgHelper.GetAllStatsByVanity(input.Vanity);
+                var rawStats = await stgHelper.GetAllStatsByVanityAsync(input.Vanity);
 
                 result.Items = rawStats.GroupBy(s => DateTime.Parse(s.Datetime).Date)
                                             .Select(stat => new ClickDate

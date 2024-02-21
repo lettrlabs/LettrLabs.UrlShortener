@@ -68,7 +68,7 @@ namespace LettrLabs.UrlShorterner.Functions.Functions.Archived
 
                 if (input.OrderIds.Any())
                 {
-                    result.UrlList = await stgHelper.GetAllShortUrlEntitiesByOrderIds(input.OrderIds);
+                    result.UrlList = await stgHelper.GetAllShortUrlEntitiesByOrderIdsAsync(input.OrderIds);
                     result.UrlList = result.UrlList.Where(p => !(p.IsArchived ?? false)).ToList();
                     var host = string.IsNullOrEmpty(_settings.CustomDomain) ? req.Url.Host : _settings.CustomDomain;
                     foreach (ShortUrlEntity url in result.UrlList)
