@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using LettrLabs.UrlShorterner.Core.Domain;
 
 namespace LettrLabs.UrlShorterner.Core.Messages

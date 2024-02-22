@@ -1,5 +1,4 @@
 using Cronos;
-using System;
 
 namespace LettrLabs.UrlShorterner.Core.Domain
 {

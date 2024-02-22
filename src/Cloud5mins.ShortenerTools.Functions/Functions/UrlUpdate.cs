@@ -1,27 +1,31 @@
 /*
 ```c#
 Input:
-
     {
-        // [Required] The url you wish to have a short version for
-        "url": "https://docs.microsoft.com/en-ca/azure/azure-functions/functions-create-your-first-function-visual-studio",
-        
-        // [Optional] Title of the page, or text description of your choice.
-        "title": "Quickstart: Create your first function in Azure using Visual Studio"
+        // [Required] New long Url where the user will be redirected to
+        "ShortUrl": "https://SOME_URL"
 
-        // [Optional] the end of the URL. If nothing one will be generated for you.
-        "vanity": "azFunc"
+         // [Required] Short Url to extract the Row_Key from
+         "ShortUrl": "https://SOME_URL"
     }
+
 
 Output:
     {
-        "ShortUrl": "http://c5m.ca/azFunc",
-        "LongUrl": "https://docs.microsoft.com/en-ca/azure/azure-functions/functions-create-your-first-function-visual-studio"
+        "Url": "https://SOME_URL",
+        "Clicks": 0,
+        "PartitionKey": "d",
+        "title": "Quickstart: Create your first function in Azure using Visual Studio"
+        "RowKey": "doc",
+        "Timestamp": "0001-01-01T00:00:00+00:00",
+        "ETag": "W/\"datetime'2020-05-06T14%3A33%3A51.2639969Z'\""
     }
 */
 
 using LettrLabs.UrlShorterner.Core.Domain;
-using LettrLabs.UrlShorterner.Core.Messages;
+
+// using Microsoft.Azure.WebJobs;
+// using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
@@ -31,28 +35,29 @@ using System.Linq;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
+using LettrLabs.UrlShorterner.Core.Messages;
 
 namespace LettrLabs.UrlShorterner.Functions;
 
-public class UrlCreate : UrlBase
+public class UrlUpdate : UrlBase
 {
-    public UrlCreate(ILoggerFactory loggerFactory,
+    public UrlUpdate(ILoggerFactory loggerFactory,
         ShortenerSettings settings,
         JsonSerializerOptions jsonSerializerOptions,
         StorageTableHelper storageTableHelper) :
-        base(loggerFactory.CreateLogger<UrlCreate>(),
+        base(loggerFactory.CreateLogger<UrlUpdate>(),
             settings,
             jsonSerializerOptions,
             storageTableHelper)
     { }
 
-    [Function("UrlCreate")]
-    public async Task<HttpResponseData> Create(
-        [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "api/UrlCreate")] HttpRequestData req)
+    [Function("UrlUpdate")]
+    public async Task<HttpResponseData> Update(
+        [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "api/UrlUpdate")] HttpRequestData req)
     {
-        Logger.LogInformation("Creating shortURL");
+        Logger.LogInformation("Updating shortURL");
 
-        var input = await JsonSerializer.DeserializeAsync<ShortRequest>(req.Body, JsonSerializerOptions);
+        var input = await JsonSerializer.DeserializeAsync<ShortUrlEntity>(req.Body, JsonSerializerOptions);
         if (input == null)
             return req.CreateResponse(HttpStatusCode.NotFound);
 
@@ -69,7 +74,7 @@ public class UrlCreate : UrlBase
 
         try
         {
-            result = await CreateSingleUrl(req, input);
+            result = await UpdateSingleUrl(req, input);
         }
         catch (Exception ex)
         {
@@ -82,13 +87,13 @@ public class UrlCreate : UrlBase
         return response;
     }
 
-    [Function("UrlCreateList")]
-    public async Task<HttpResponseData> CreateList(
-        [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "api/UrlCreateList")] HttpRequestData req)
+    [Function("UrlUpdateList")]
+    public async Task<HttpResponseData> UpdateList(
+        [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "api/UrlUpdateList")] HttpRequestData req)
     {
-        Logger.LogInformation("Creating shortURL List");
+        Logger.LogInformation("Updating shortURL List");
 
-        var inputList = await JsonSerializer.DeserializeAsync<List<ShortRequest>>(req.Body, JsonSerializerOptions);
+        var inputList = await JsonSerializer.DeserializeAsync<List<ShortUrlEntity>>(req.Body, JsonSerializerOptions);
         if (inputList == null)
             return req.CreateResponse(HttpStatusCode.NotFound);
 
@@ -103,7 +108,7 @@ public class UrlCreate : UrlBase
         return response;
     }
 
-    private async Task<ShortResponse> ProcessSingleRequestAsync(HttpRequestData req, ShortRequest request)
+    private async Task<ShortResponse> ProcessSingleRequestAsync(HttpRequestData req, ShortUrlEntity request)
     {
         try
         {
@@ -116,7 +121,7 @@ public class UrlCreate : UrlBase
             if (!Uri.IsWellFormedUriString(request.Url, UriKind.Absolute))
                 await GetMalformedUrlBadResponse(req, request.Url);
 
-            return await CreateSingleUrl(req, request);
+            return await UpdateSingleUrl(req, request);
         }
         catch
         {
@@ -125,17 +130,14 @@ public class UrlCreate : UrlBase
         }
     }
 
-    private async Task<ShortResponse> CreateSingleUrl(HttpRequestData req, ShortRequest input)
+    private async Task<ShortResponse> UpdateSingleUrl(HttpRequestData req, ShortUrlEntity input)
     {
         string longUrl = input.Url;
-        string title = string.IsNullOrWhiteSpace(input.Title) ? "" : input.Title.Trim();
-
-        var newRow = new ShortUrlEntity(longUrl, await Utility.GetValidEndUrl(StorageTableHelper), title, input);
-
-        await StorageTableHelper.SaveShortUrlEntityAsync(newRow);
+        input.SetKeys();
+        input = await StorageTableHelper.UpdateShortUrlEntityUrlAsync(input);
 
         var host = string.IsNullOrEmpty(Settings.CustomDomain) ? req.Url.Host : Settings.CustomDomain;
-        var result = new ShortResponse(req.Url.Scheme, host, newRow.Url, newRow.RowKey, newRow.Title, input.OrderRecipientId);
+        var result = new ShortResponse(req.Url.Scheme, host, input.Url, input.RowKey, input.Title, input.OrderRecipientId);
 
         Logger.LogInformation("Short Url created {RedirectUrl} redirecting to {DestinationUrl} for order {OrderId} for {CustomerName}",
             result.ShortUrl, longUrl, input.OrderId, input.OrderRecipientName);

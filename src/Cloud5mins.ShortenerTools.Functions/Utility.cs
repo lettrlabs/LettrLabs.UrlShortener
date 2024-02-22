@@ -1,15 +1,7 @@
-using LettrLabs.UrlShorterner.Core.Domain;
-using Microsoft.Azure.Functions.Worker.Http;
-using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System;
 using System.Linq;
-using System.Net;
-using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
-
-
+using LettrLabs.UrlShorterner.Core.Domain;
 
 namespace LettrLabs.UrlShorterner
 {
@@ -27,19 +19,19 @@ namespace LettrLabs.UrlShorterner
         {
             //if (string.IsNullOrEmpty(vanity))
             //{
-                var newKey = await stgHelper.GetNextTableId();
-                string getCode() => Encode(newKey);
-                if (await stgHelper.IfShortUrlEntityExistByVanity(getCode()))
+                var newKey = await stgHelper.GetNextTableIdAsync();
+                if (await stgHelper.IfShortUrlEntityExistByVanityAsync(GetCode()))
                     return await GetValidEndUrl(
                         //vanity, 
                         stgHelper);
 
-                return string.Join(string.Empty, getCode());
+                return string.Join(string.Empty, GetCode());
             //}
             //else
             //{
             //    return string.Join(string.Empty, vanity);
             //}
+            string GetCode() => Encode(newKey);
         }
 
         public static string Encode(int i)
@@ -56,20 +48,18 @@ namespace LettrLabs.UrlShorterner
         }
 
         // generates a unique, random, and alphanumeric token for the use as a url 
-        //(not entirely secure but not sequential so generally not guessable)
+        // (not entirely secure but not sequential so generally not guessable)
         public static string GenerateUniqueRandomToken(int uniqueId)
         {
-            using (var generator = RandomNumberGenerator.Create())
-            {
-                //minimum size I would suggest is 5, longer the better but we want short URLs!
-                var bytes = new byte[MinVanityCodeLength];
-                generator.GetBytes(bytes);
-                var chars = bytes
-                    .Select(b => ConversionCode[b % ConversionCode.Length]);
-                var token = new string(chars.ToArray());
-                var reversedToken = string.Join(string.Empty, token.Reverse());
-                return uniqueId + reversedToken;
-            }
+            using var generator = RandomNumberGenerator.Create();
+            //minimum size I would suggest is 5, longer the better but we want short URLs!
+            var bytes = new byte[MinVanityCodeLength];
+            generator.GetBytes(bytes);
+            var chars = bytes
+                .Select(b => ConversionCode[b % ConversionCode.Length]);
+            var token = new string(chars.ToArray());
+            var reversedToken = string.Join(string.Empty, token.Reverse());
+            return uniqueId + reversedToken;
         }
     }
 }

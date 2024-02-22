@@ -2,6 +2,7 @@ using LettrLabs.UrlShorterner.Core.Domain;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Text.Json;
 
 namespace LettrLabs.UrlShorterner
 {
@@ -16,7 +17,7 @@ namespace LettrLabs.UrlShorterner
                 .ConfigureServices((context, services) =>
                 {
                     // Add our global configuration instance
-                    services.AddSingleton(options =>
+                    services.AddSingleton(_ =>
                     {
                         var configuration = context.Configuration;
                         shortenerSettings = new ShortenerSettings();
@@ -25,7 +26,9 @@ namespace LettrLabs.UrlShorterner
                     });
 
                     // Add our configuration class
-                    services.AddSingleton(options => { return shortenerSettings; });
+                    services.AddSingleton(_ => shortenerSettings);
+                    services.AddSingleton(_ => new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                    services.AddScoped(options => new StorageTableHelper(options.GetRequiredService<ShortenerSettings>().DataStorage));
                 })
                 .Build();
 

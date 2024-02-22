@@ -80,7 +80,7 @@ namespace LettrLabs.UrlShorterner.Functions.Functions.Archived
 
                 StorageTableHelper stgHelper = new StorageTableHelper(_settings.DataStorage);
 
-                result = await stgHelper.ArchiveShortUrlEntity(input);
+                result = await stgHelper.ArchiveShortUrlEntityAsync(input);
             }
             catch (Exception ex)
             {

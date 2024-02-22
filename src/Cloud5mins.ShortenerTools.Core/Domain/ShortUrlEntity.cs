@@ -9,24 +9,20 @@ namespace LettrLabs.UrlShorterner.Core.Domain
         private string _title;
         private ShortRequest _input;
 
-        public string Url { get; set; }
         private string _activeUrl { get; set; }
 
         public string ActiveUrl
         {
             get
             {
-                if (String.IsNullOrEmpty(_activeUrl))
+                if (string.IsNullOrEmpty(_activeUrl))
                     _activeUrl = GetActiveUrl();
                 return _activeUrl;
             }
         }
-
-
+        public string Url { get; set; }
         public string Title { get; set; }
-
         public string ShortUrl { get; set; }
-
         public int ProfileId { get; set; }
         public int OrderId { get; set; }
         public int OrderRecipientId { get; set; }
@@ -44,39 +40,21 @@ namespace LettrLabs.UrlShorterner.Core.Domain
             {
                 if (_schedules == null)
                 {
-                    if (string.IsNullOrEmpty(SchedulesPropertyRaw))
-                    {
-                        _schedules = new List<Schedule>();
-                    }
-                    else
-                    {
-                        _schedules = JsonSerializer.Deserialize<Schedule[]>(SchedulesPropertyRaw).ToList<Schedule>();
-                    }
+                    _schedules = string.IsNullOrEmpty(SchedulesPropertyRaw)
+                        ? new List<Schedule>()
+                        : JsonSerializer.Deserialize<Schedule[]>(SchedulesPropertyRaw).ToList();
                 }
                 return _schedules;
             }
-            set
-            {
-                _schedules = value;
-            }
+            set => _schedules = value;
         }
 
         public ShortUrlEntity() { }
-
-        //public ShortUrlEntity(ShortRequest shortRequest)
-        //{
-        //    Initialize(shortRequest);
-        //}
 
         public ShortUrlEntity(string longUrl, string endUrl)
         {
             Initialize(longUrl, endUrl, string.Empty, null);
         }
-
-        //public ShortUrlEntity(string longUrl, string endUrl, Schedule[] schedules)
-        //{
-        //    Initialize(longUrl, endUrl, string.Empty, schedules);
-        //}
 
         public ShortUrlEntity(string longUrl, string endUrl, string title, Schedule[] schedules)
         {
@@ -93,6 +71,12 @@ namespace LettrLabs.UrlShorterner.Core.Domain
             OrderRecipientName = input.OrderRecipientName;
         }
 
+        public void SetKeys()
+        {
+            RowKey = ShortUrl.Split('/').Last();
+            PartitionKey = RowKey.First().ToString();
+        }
+
         private void Initialize(string longUrl, string endUrl, string title, Schedule[] schedules)
         {
             PartitionKey = endUrl.First().ToString();
@@ -102,24 +86,12 @@ namespace LettrLabs.UrlShorterner.Core.Domain
             Clicks = 0;
             IsArchived = false;
 
-            if(schedules?.Length>0)
+            if (schedules?.Length > 0)
             {
-                Schedules = schedules.ToList<Schedule>();
-                SchedulesPropertyRaw = JsonSerializer.Serialize<List<Schedule>>(Schedules);
+                Schedules = schedules.ToList();
+                SchedulesPropertyRaw = JsonSerializer.Serialize(Schedules);
             }
         }
-
-        //public static ShortUrlEntity GetEntity(string longUrl, string endUrl, string title, Schedule[] schedules)
-        //{
-        //    return new ShortUrlEntity
-        //    {
-        //        PartitionKey = endUrl.First().ToString(),
-        //        RowKey = endUrl,
-        //        Url = longUrl,
-        //        Title = title,
-        //        Schedules = schedules.ToList<Schedule>()
-        //    };
-        //}
 
         private string GetActiveUrl()
         {

@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace LettrLabs.UrlShorterner.Core.Domain
 {
     public class ClickStatsEntityList
