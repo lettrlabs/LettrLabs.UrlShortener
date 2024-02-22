@@ -2,17 +2,11 @@
 ```c#
 Input:
     {
-         // [Required]
-        "PartitionKey": "d",
+        // [Required] New long Url where the user will be redirected to
+        "ShortUrl": "https://SOME_URL"
 
-         // [Required]
-        "RowKey": "doc",
-
-        // [Optional] New Title for this URL, or text description of your choice.
-        "title": "Quickstart: Create your first function in Azure using Visual Studio"
-
-        // [Optional] New long Url where the the user will be redirect
-        "Url": "https://SOME_URL"
+         // [Required] Short Url to extract the Row_Key from
+         "ShortUrl": "https://SOME_URL"
     }
 
 
