@@ -100,6 +100,7 @@ public class UrlCreate : UrlBase
         var response = req.CreateResponse(HttpStatusCode.OK);
         await response.WriteAsJsonAsync(urlList);
 
+        Logger.LogInformation("Created shortURL List");
         return response;
     }
 
@@ -137,8 +138,8 @@ public class UrlCreate : UrlBase
         var host = string.IsNullOrEmpty(Settings.CustomDomain) ? req.Url.Host : Settings.CustomDomain;
         var result = new ShortResponse(req.Url.Scheme, host, newRow.Url, newRow.RowKey, newRow.Title, input.OrderRecipientId);
 
-        Logger.LogInformation("Short Url created {RedirectUrl} redirecting to {DestinationUrl} for order {OrderId} for {CustomerName}",
-            result.ShortUrl, longUrl, input.OrderId, input.OrderRecipientName);
+        //Logger.LogInformation("Short Url created {RedirectUrl} redirecting to {DestinationUrl} for order {OrderId} for {CustomerName}",
+        //    result.ShortUrl, longUrl, input.OrderId, input.OrderRecipientName);
         return result;
     }
 }
