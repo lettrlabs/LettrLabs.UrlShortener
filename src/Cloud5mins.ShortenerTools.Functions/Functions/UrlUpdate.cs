@@ -141,8 +141,8 @@ public class UrlUpdate : UrlBase
         var host = string.IsNullOrEmpty(Settings.CustomDomain) ? req.Url.Host : Settings.CustomDomain;
         var result = new ShortResponse(req.Url.Scheme, host, input.Url, input.RowKey, input.Title, input.OrderRecipientId);
 
-        //Logger.LogInformation("Short Url updated {RedirectUrl} redirecting to {DestinationUrl} for order {OrderId} for {CustomerName}",
-        //    result.ShortUrl, longUrl, input.OrderId, input.OrderRecipientName);
+        Logger.LogInformation("Short Url updated {RedirectUrl} redirecting to {DestinationUrl} for order {OrderId} for {CustomerName}",
+            result.ShortUrl, longUrl, input.OrderId, input.OrderRecipientName);
         return result;
     }
 }
