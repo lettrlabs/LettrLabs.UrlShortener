@@ -127,8 +127,6 @@ public class UrlCreate : UrlBase
 
     private async Task<ShortResponse> CreateSingleUrl(HttpRequestData req, ShortRequest input)
     {
-        Logger.LogInformation("Creating shortURL for {DestinationUrl}", input.Url);
-
         string longUrl = input.Url;
         string title = string.IsNullOrWhiteSpace(input.Title) ? "" : input.Title.Trim();
 

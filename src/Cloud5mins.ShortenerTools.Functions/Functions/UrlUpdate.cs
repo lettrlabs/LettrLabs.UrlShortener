@@ -138,8 +138,6 @@ public class UrlUpdate : UrlBase
 
     private async Task<ShortResponse> UpdateSingleUrl(HttpRequestData req, ShortUrlEntity input)
     {
-        Logger.LogInformation("Updating shortURL for {DestinationUrl}", input.Url);
-
         string longUrl = input.Url;
         input.SetKeys();
         input = await StorageTableHelper.UpdateShortUrlEntityUrlAsync(input);
