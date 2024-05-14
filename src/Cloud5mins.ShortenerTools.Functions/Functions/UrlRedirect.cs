@@ -66,16 +66,24 @@ namespace LettrLabs.UrlShorterner.Functions.Functions
 
         private async Task UpdateOrderRecipientStatisticAsync(ShortUrlEntity urlEntity)
         {
-            var apiUrl = Environment.GetEnvironmentVariable("LettrLabsApp.ApiUrl");
-            var apiKey = Environment.GetEnvironmentVariable("LettrLabsApp.ApiKey");
-            var statisticName = Environment.GetEnvironmentVariable("LettrLabsApp.QrCodeScanCountStatistic");
+            try
+            {
 
-            var jsonZap = JsonSerializer.Serialize(new { urlEntity.OrderId, urlEntity.OrderRecipientId, StatisticName = statisticName, StatisticValue = urlEntity.Clicks });
-            StringContent content = new(jsonZap, Encoding.UTF8, "application/json");
+                var apiUrl = Environment.GetEnvironmentVariable("LettrLabsApp.ApiUrl");
+                var apiKey = Environment.GetEnvironmentVariable("LettrLabsApp.ApiKey");
+                var statisticName = Environment.GetEnvironmentVariable("LettrLabsApp.QrCodeScanCountStatistic");
 
-            using HttpClient client = new();
-            client.DefaultRequestHeaders.Add("X-API-KEY", apiKey);
-            await client.PostAsync($"{apiUrl}/v1/order-recipients-statistics", content);
+                var jsonZap = JsonSerializer.Serialize(new { urlEntity.OrderId, urlEntity.OrderRecipientId, StatisticName = statisticName, StatisticValue = urlEntity.Clicks });
+                StringContent content = new(jsonZap, Encoding.UTF8, "application/json");
+
+                using HttpClient client = new();
+                client.DefaultRequestHeaders.Add("X-API-KEY", apiKey);
+                await client.PostAsync($"{apiUrl}/v1/order-recipients-statistics", content);
+            }
+            catch
+            {
+                // It's bad if we don't log statistics in the main LettrLabs API, but we can't break the Redirect in case something happens while requesting
+            }
         }
     }
 }
