@@ -68,7 +68,6 @@ namespace LettrLabs.UrlShorterner.Functions.Functions
         {
             try
             {
-
                 var apiUrl = Environment.GetEnvironmentVariable("LettrLabsApp.ApiUrl");
                 var apiKey = Environment.GetEnvironmentVariable("LettrLabsApp.ApiKey");
                 var statisticName = Environment.GetEnvironmentVariable("LettrLabsApp.QrCodeScanCountStatistic");
