@@ -1,12 +1,16 @@
+using System;
+using System.Net;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 using LettrLabs.UrlShorterner.Core.Domain;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
-using System.Net;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace LettrLabs.UrlShorterner.Functions.Functions.Archived
+namespace LettrLabs.UrlShorterner.Functions.Functions
 {
     public class UrlRedirect
     {
@@ -45,6 +49,7 @@ namespace LettrLabs.UrlShorterner.Functions.Functions.Archived
                     newUrl.Clicks++;
                     await stgHelper.SaveClickStatsEntityAsync(new ClickStatsEntity(newUrl.RowKey));
                     await stgHelper.SaveShortUrlEntityAsync(newUrl);
+                    await UpdateOrderRecipientStatisticAsync(newUrl);
                     redirectUrl = WebUtility.UrlDecode(newUrl.ActiveUrl);
                 }
             }
@@ -57,6 +62,20 @@ namespace LettrLabs.UrlShorterner.Functions.Functions.Archived
             var res = req.CreateResponse(HttpStatusCode.Redirect);
             res.Headers.Add("Location", redirectUrl);
             return res;
+        }
+
+        private async Task UpdateOrderRecipientStatisticAsync(ShortUrlEntity urlEntity)
+        {
+            var apiUrl = Environment.GetEnvironmentVariable("LettrLabsApp.ApiUrl");
+            var apiKey = Environment.GetEnvironmentVariable("LettrLabsApp.ApiKey");
+            var statisticName = Environment.GetEnvironmentVariable("LettrLabsApp.QrCodeScanCountStatistic");
+
+            var jsonZap = JsonSerializer.Serialize(new { urlEntity.OrderId, urlEntity.OrderRecipientId, StatisticName = statisticName, StatisticValue = urlEntity.Clicks });
+            StringContent content = new(jsonZap, Encoding.UTF8, "application/json");
+
+            using HttpClient client = new();
+            client.DefaultRequestHeaders.Add("X-API-KEY", apiKey);
+            await client.PostAsync($"{apiUrl}/v1/order-recipients-statistics", content);
         }
     }
 }
