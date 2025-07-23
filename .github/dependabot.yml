@@ -5,16 +5,13 @@
 
 version: 2
 updates:
-  - package-ecosystem: "nuget" 
+  - package-ecosystem: "nuget"
     directory: "/src"
-    target-branch: "vnext"
     schedule:
-      interval: "monthly"
-    assignees: 
-        - "fboucher"
-    reviewers: 
-        - "fboucher"
+      interval: "daily"
+    reviewers:
+      - "Beau-Gosse-LettrLabs"
     labels:
-        - dependencies
-        - Serverless-Backend      
-
+      - dependencies
+      - security
+    security-only: true
