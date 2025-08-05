@@ -1,4 +1,7 @@
-# Azure Url Shortener Environments
+# LettrLabs Confluence Documentation
+https://lettrlabs.atlassian.net/wiki/spaces/SW/pages/875102212/URLShortener
+
+# LettrLabs Azure Url Shortener Environments
 dev: lettrlabs-urlshortener-dev
 prod: lettrlabs-urlshortener-prd
 uat: lettrlabs-urlshortener-uat

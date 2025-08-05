@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+
+name: src
+metadata:
+    template: azd-init@1.18.0
+services:
+    cloud5mins-shortenertools-functions:
+        project: Cloud5mins.ShortenerTools.Functions
+        host: containerapp
+        language: dotnet
+resources:
+    cloud5mins-shortenertools-functions:
+        type: host.containerapp
+        port: 8080
